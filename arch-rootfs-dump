@@ -11,8 +11,13 @@ fi
 
 export TODAYS_SECONDS=$(($(($((10#$(date +%H) * 60 + 10#$(date +%M))) * 60)) + 10#$(date +%S)))
 
+# export command=$(\
+#     printf "dump -%su -z9 -D %s/%s -f %s/ArchGreenDump-%slvl-gz-%s.%s.dump /"\
+#     $1 $DUMPS_DIRECTORY $DATES_FILE $DUMPS_DIRECTORY $1 $(date +%d.%m.%y) $TODAYS_SECONDS\
+# )
+
 export command=$(\
-    printf "dump -%su -z9 -D %s/%s -f %s/ArchGreenDump-%slvl-gz-%s.%s.dump /"\
+    printf "dump -%su -D %s/%s -f - / | pzstd -19 > %s/ArchGreenDump-%slvl-%s.%s.dump.zst"\
     $1 $DUMPS_DIRECTORY $DATES_FILE $DUMPS_DIRECTORY $1 $(date +%d.%m.%y) $TODAYS_SECONDS\
 )
 
